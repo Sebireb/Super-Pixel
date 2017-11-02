@@ -10,7 +10,7 @@ public class MyFirstBoard {
 		controller.setColor(5, 5, 127, 127, 127);
 		controller.updateLedStripe();
 		
-		System.out.println("Some Changes");
+		System.out.println("Setup on my Computer");
 	}
 
 }
