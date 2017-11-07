@@ -1,92 +1,88 @@
 package characters;
 
-import java.awt.Color;
-
 import ledControl.BoardController;
 import ledProjects.Drawable;
 
 public abstract class Character implements Drawable {
 	
-	BoardController controller = BoardController.getBoardController();
-	int colors[][][] = controller.getColors();
+	BoardController controller;
+	int colors[][][];
 	String name;
-	int x[];
-	int y[];
-	Color color[][];
+	int x;
+	int y;
+	int color[][];
+	int groeﬂe;
+	int[] background;
 
-	public Character(int px[], int py[], Color pcolor[][]) {
+	public Character(int px, int py, int pcolor[][], int pGroeﬂe, BoardController pController, int[] pBackground) {
 		x = px;
 		y = py;
 		color = pcolor;
+		groeﬂe = pGroeﬂe;
+		controller = pController;
+		colors = controller.getColors();
+		background = pBackground;
 		draw();
 	}
 
 	@Override
 	public void draw() {
-		if(!(x[1] < 0 || x[0] > 12 || y[1] < 0 || y[0] > 12)){
-			return;
-		}
-		for(int x = this.x[0]; x < this.x[1]; x++){
-			for(int y = this.y[0]; y < this.y[1]; y++){
-				colors[x][y][0] = color[x][y].getRed();
-				colors[x][y][1] = color[x][y].getGreen();
-				colors[x][y][2] = color[x][y].getBlue();
-			}
-		}
+			for(int y = this.y-groeﬂe; y < this.y; y++){
+				colors[x][y][0] = color[0][0];
+				colors[x][y][1] = color[0][1];
+				colors[x][y][2] = color[0][2];
+			}		
 		controller.updateLedStripe();
 	}
 
 	@Override
 	public void clear() {
-		if(!(x[1] < 0 || x[0] > 12 || y[1] < 0 || y[0] > 12)){
-			return;
-		}
-		for(int x = this.x[0]; x < this.x[1]; x++){
-			for(int y = this.y[0]; y < this.y[1]; y++){
-				for(int c = 0; c < 3; c++){
-					colors[x][y][c] = 0;
-				}
-			}
+		for(int y = this.y-groeﬂe; y < this.y; y++){
+			controller.setColor(x, y, background);
 		}
 	}
 	
 	public void move(int dx, int dy){
 		clear();
-		for(int i = 0; i < x.length; i++){
-			x[i] += dx;
-		}
-		for(int i = 0; i < y.length; i++){
-			y[i] += dy;
-		}
+		x += dx;		
+		y += dy;
 		draw();
 	}
 
-	public int[] getX() {
+	public int getX() {
 		return x;
 	}
 
-	public void setX(int[] x) {
+	public void setX(int x) {
 		this.x = x;
 	}
 
-	public int[] getY() {
+	public int getY() {
 		return y;
 	}
 
-	public void setY(int[] y) {
+	public void setY(int y) {
 		this.y = y;
 	}
 
-	public Color[][] getColor() {
+	public int[][] getColor() {
 		return color;
 	}
 
-	public void setColor(Color[][] color) {
+	public void setColor(int[][] color) {
 		this.color = color;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public int getGroeﬂe() {
+		return groeﬂe;
+	}
+
+	public void setGroeﬂe(int groeﬂe) {
+		this.groeﬂe = groeﬂe;
 	}
 
 }
