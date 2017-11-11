@@ -10,8 +10,9 @@ public class EventBlock extends Block{
 	}
 
 	@Override
-	void action() {
-		//Wird ausgeführt, wenn Mario gegen den Block springt.
+	public void action() {
+		state = 1;
+		draw();
 	}
 
 }

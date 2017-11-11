@@ -12,6 +12,7 @@ public abstract class Block implements Drawable {
 	int y;
 	int color[][];	
 	int background[];
+	int state;
 
 	public Block(int px, int py, int pcolor[][], BoardController pController, int pBackground[]) {
 		x = px;
@@ -20,14 +21,15 @@ public abstract class Block implements Drawable {
 		controller = pController;
 		colors = controller.getColors();
 		background = pBackground;
+		state = 0;
 		draw();
 	}
 
 	@Override
 	public void draw() {
-		colors[x][y][0] = color[0][0];
-		colors[x][y][1] = color[0][1];
-		colors[x][y][2] = color[0][2];
+		colors[x][y][0] = color[state][0];
+		colors[x][y][1] = color[state][1];
+		colors[x][y][2] = color[state][2];
 		controller.updateLedStripe();
 	}
 
@@ -44,7 +46,7 @@ public abstract class Block implements Drawable {
 		draw();
 	}
 	
-	abstract void action();
+	abstract public void action();
 
 	public int getX() {
 		return x;

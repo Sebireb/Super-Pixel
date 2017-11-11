@@ -12,6 +12,7 @@ public abstract class Character implements Drawable {
 	int y;
 	int color[][];
 	int groeﬂe;
+	int state;
 	int[] background;
 
 	public Character(int px, int py, int pcolor[][], int pGroeﬂe, BoardController pController, int[] pBackground) {
@@ -22,15 +23,16 @@ public abstract class Character implements Drawable {
 		controller = pController;
 		colors = controller.getColors();
 		background = pBackground;
+		state = 0;
 		draw();
 	}
 
 	@Override
 	public void draw() {
 			for(int y = this.y-groeﬂe; y < this.y; y++){
-				colors[x][y][0] = color[0][0];
-				colors[x][y][1] = color[0][1];
-				colors[x][y][2] = color[0][2];
+				colors[x][y][0] = color[state][0];
+				colors[x][y][1] = color[state][1];
+				colors[x][y][2] = color[state][2];
 			}		
 		controller.updateLedStripe();
 	}

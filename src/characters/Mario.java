@@ -29,7 +29,7 @@ public class Mario extends Character {
 		}else {
 			lives = 0;
 			clear();
-			groeﬂe = 0;			
+			groeﬂe = 0;
 		}
 	}
 	
