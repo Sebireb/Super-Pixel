@@ -1,13 +1,14 @@
 package ledProjects;
 
-import blocks.Brick;
+import blocks.Block;
 import blocks.EventBlock;
 import ledControl.BoardController;
+import worlds.World;
 
 public class MyFirstBoard {
 	
 	static BoardController controller = BoardController.getBoardController();
-	final static int[] background = new int[]{127, 127, 127};
+	public final static int[] background = new int[]{127, 127, 127};
 	final static int[][] brick = new int[][]{{127,80,30}};
 	final static int[][] eventBlock = new int[][]{{127,127,0},{127, 40, 0}};
 
@@ -19,12 +20,20 @@ public class MyFirstBoard {
 		}
 		controller.updateLedStripe();
 		
-		EventBlock block = new EventBlock(5, 5, eventBlock, controller, background);
-		Brick block2 = new Brick(6,6,brick,controller,background);
-		controller.sleep(500);
-		block.action();
-		block2.action();
+		//Testcode
 		
-		System.out.println("");
+		Block[] b = new Block[12];
+		for(int i = 0; i < b.length; i++){
+			b[i] = new EventBlock(i, i, Block.EVENTBLOCK, controller, background);
+		}
+		
+		World w = new World(b, controller);
+		controller.sleep(500);
+		for(int i = 0; i < 10; i++){
+			w.move(1, 1);	
+			controller.sleep(500);
+		}
+		
+		System.out.println("implemented Brick");
 	}
 }

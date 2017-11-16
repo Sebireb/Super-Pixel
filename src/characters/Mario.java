@@ -9,6 +9,7 @@ public class Mario extends Character {
 
 	public Mario(int px, int py, int[][] pcolor, int pgroeﬂe, BoardController pController, int[] pBackground) {
 		super(px, py, pcolor, pgroeﬂe, pController, pBackground);
+		name = "Mario";
 	}
 	
 	public void grow() {

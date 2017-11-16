@@ -5,6 +5,8 @@ import ledProjects.Drawable;
 
 public abstract class Block implements Drawable {
 	
+	public final static int[][] EVENTBLOCK = new int[][]{{127,127,0},{127, 50, 50}};
+	
 	BoardController controller;
 	int colors[][][];
 	String name;
@@ -27,23 +29,18 @@ public abstract class Block implements Drawable {
 
 	@Override
 	public void draw() {
-		colors[x][y][0] = color[state][0];
-		colors[x][y][1] = color[state][1];
-		colors[x][y][2] = color[state][2];
-		controller.updateLedStripe();
+		controller.setColor(x, y, color[state]);
 	}
 
 	@Override
 	public void clear() {
 		controller.setColor(x, y, background);
-		controller.updateLedStripe();
 	}
 	
 	public void move(int dx, int dy){
 		clear();
 		x += dx;
 		y += dy;
-		draw();
 	}
 	
 	abstract public void action();

@@ -29,12 +29,9 @@ public abstract class Character implements Drawable {
 
 	@Override
 	public void draw() {
-			for(int y = this.y-groeﬂe; y < this.y; y++){
-				colors[x][y][0] = color[state][0];
-				colors[x][y][1] = color[state][1];
-				colors[x][y][2] = color[state][2];
-			}		
-		controller.updateLedStripe();
+		for(int y = this.y-groeﬂe; y < this.y; y++){
+			controller.setColor(x, y, color[state]);
+		}	
 	}
 
 	@Override
@@ -48,7 +45,6 @@ public abstract class Character implements Drawable {
 		clear();
 		x += dx;		
 		y += dy;
-		draw();
 	}
 
 	public int getX() {
