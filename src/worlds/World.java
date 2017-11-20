@@ -2,9 +2,7 @@ package worlds;
 
 import blocks.Block;
 import characters.Character;
-import characters.Mario;
 import ledControl.BoardController;
-import ledProjects.MyFirstBoard;
 
 public class World {
 	
@@ -12,11 +10,10 @@ public class World {
 	Block[] blocks;
 	Character[] characters;
 
-	public World(Block[] pBlocks, BoardController pController) {
+	public World(Block[] pBlocks, Character[] pCharacters, BoardController pController) {
 		controller = pController;
 		blocks = pBlocks;
-		characters = new Character[1];
-		characters[0] = new Mario(6, 6, new int[][]{{127, 0, 0}}, 1, controller, MyFirstBoard.background);
+		characters = pCharacters;
 		controller.updateLedStripe();
 	}
 	
@@ -36,6 +33,24 @@ public class World {
 			characters[i].draw();
 		}
 		controller.updateLedStripe();
+	}
+	
+	public boolean isSolid(int x, int y){
+		for(int i = 0; i < blocks.length; i++){
+			if(blocks[i].getX() == x && blocks[i].getY() == y){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isEnemy(int x, int y){
+		for(int i = 0; i < characters.length; i++){
+			if(characters[i].getX() == x && characters[i].getY() == y && !characters[i].getName().equals("Mario")){
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
