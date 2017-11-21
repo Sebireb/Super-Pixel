@@ -2,6 +2,7 @@ package worlds;
 
 import blocks.Block;
 import characters.Character;
+import characters.Mario;
 import ledControl.BoardController;
 
 public class World {
@@ -9,11 +10,13 @@ public class World {
 	BoardController controller;
 	Block[] blocks;
 	Character[] characters;
+	Mario mario;
 
 	public World(Block[] pBlocks, Character[] pCharacters, BoardController pController) {
 		controller = pController;
 		blocks = pBlocks;
 		characters = pCharacters;
+		mario = (Mario) characters[0];
 		controller.updateLedStripe();
 	}
 	
@@ -21,18 +24,15 @@ public class World {
 		for(int i = 0; i < blocks.length; i++){
 			blocks[i].move(dx, dy);	
 		}
-		for(int i = 0; i < blocks.length; i++){
-			blocks[i].draw();
-		}
 		for(int i = 0; i < characters.length; i++){
 			if(!characters[i].getName().equals("Mario")){
 				characters[i].move(dx, dy);
 			}
 		}
-		for(int i = 0; i < characters.length; i++){
-			characters[i].draw();
-		}
-		controller.updateLedStripe();
+	}
+	
+	public void jump() {
+		mario.move(0, -2);
 	}
 	
 	public boolean isSolid(int x, int y){
@@ -51,6 +51,13 @@ public class World {
 			}
 		}
 		return false;
+	}
+	
+	public void fall() {
+		if(! isSolid(mario.getX(), mario.getY())) {
+			mario.move(0, 1);
+			mario.draw();
+		}
 	}
 
 }

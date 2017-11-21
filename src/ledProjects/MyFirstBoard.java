@@ -3,7 +3,7 @@ package ledProjects;
 import java.awt.event.KeyEvent;
 
 import blocks.Block;
-import blocks.EventBlock;
+import blocks.Grass;
 import characters.Character;
 import characters.Mario;
 import ledControl.BoardController;
@@ -17,7 +17,8 @@ public class MyFirstBoard {
 	final static int[][] brick = new int[][]{{127,80,30}};
 	final static int[][] eventBlock = new int[][]{{127,127,0},{127, 40, 0}};
 	private static World w;
-	private static KeyBuffer input;
+	private static  KeyBuffer input;
+	private static Update update;
 
 	public static void main(String[] args) {
 		
@@ -32,10 +33,21 @@ public class MyFirstBoard {
 		
 		//TESTCODE
 		
-		w = new World(new Block[]{new EventBlock(2, 2, Block.EVENTBLOCK, controller, background)}, new Character[]{new Mario(6, 6, new int[][]{{127,0,0}}, 1, controller, background)}, controller);
+		Block[] b = new Block[50];
+		for(int x = -15; x < 35; x++) {
+			b[x+15] = new Grass(x, 11, Block.GRASS, controller, background);
+		}
+		Character[] c = new Character[]{new Mario(6, 6, Character.MARIO, 1, controller, background)};
+		w = new World(b, c, controller);
+		
+		update = new Update(controller, b, c, background);
+		update.start();
 		
 		while(true){
 			processInput(input.pop());
+			w.fall();
+			input.clear();
+			controller.sleep(200);
 		}
 	}
 	
@@ -45,6 +57,10 @@ public class MyFirstBoard {
 	
 	public static void goLeft(){
 		w.move(1, 0);
+	}
+	
+	public static void jump() {
+		w.jump();
 	}
 	
 	public static void processInput(KeyEvent e){
@@ -57,6 +73,9 @@ public class MyFirstBoard {
 			}
 			if(e.getKeyCode() == KeyEvent.VK_D){
 				goRight();
+			}
+			if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+				jump();
 			}
 		}
 	}

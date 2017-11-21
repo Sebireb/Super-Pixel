@@ -13,10 +13,10 @@ public class Mario extends Character {
 	}
 	
 	public void grow() {
-		if(groeﬂe == 1) {
+		if(size == 1) {
 			lives ++;
 			clear();
-			groeﬂe = 2;
+			size = 2;
 			draw();
 		}
 	}
@@ -25,12 +25,12 @@ public class Mario extends Character {
 		if(lives >= 2) {
 			lives --;
 			clear();
-			groeﬂe = 1;
+			size = 1;
 			draw();
 		}else {
 			lives = 0;
 			clear();
-			groeﬂe = 0;
+			size = 0;
 		}
 	}
 	

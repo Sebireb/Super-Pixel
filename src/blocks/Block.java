@@ -5,7 +5,9 @@ import ledProjects.Drawable;
 
 public abstract class Block implements Drawable {
 	
-	public final static int[][] EVENTBLOCK = new int[][]{{127,127,0},{127, 50, 50}};
+	public final static int[][] EVENTBLOCK = new int[][]{{127, 127, 0},{127, 50, 50}};
+	public final static int[][] BRICK = new int[][] {{127, 70, 20}};
+	public final static int[][] GRASS = new int[][] {{0, 127, 0}};
 	
 	BoardController controller;
 	int colors[][][];
@@ -71,5 +73,13 @@ public abstract class Block implements Drawable {
 
 	public String getName() {
 		return name;
+	}
+	
+	public void setState(int state) {
+		this.state = state;
+	}
+	
+	public int getState() {
+		return state;
 	}
 }

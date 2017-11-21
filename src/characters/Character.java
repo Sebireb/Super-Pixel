@@ -5,21 +5,23 @@ import ledProjects.Drawable;
 
 public abstract class Character implements Drawable {
 	
+	public final static int[][] MARIO = new int[][] {{127,0,0}};
+	
 	BoardController controller;
 	int colors[][][];
 	String name;
 	int x;
 	int y;
 	int color[][];
-	int groeﬂe;
+	int size;
 	int state;
 	int[] background;
 
-	public Character(int px, int py, int pcolor[][], int pGroeﬂe, BoardController pController, int[] pBackground) {
+	public Character(int px, int py, int pcolor[][], int pSize, BoardController pController, int[] pBackground) {
 		x = px;
 		y = py;
 		color = pcolor;
-		groeﬂe = pGroeﬂe;
+		size = pSize;
 		controller = pController;
 		colors = controller.getColors();
 		background = pBackground;
@@ -29,14 +31,14 @@ public abstract class Character implements Drawable {
 
 	@Override
 	public void draw() {
-		for(int y = this.y-groeﬂe; y < this.y; y++){
+		for(int y = this.y-size; y < this.y; y++){
 			controller.setColor(x, y, color[state]);
 		}	
 	}
 
 	@Override
 	public void clear() {
-		for(int y = this.y-groeﬂe; y < this.y; y++){
+		for(int y = this.y-size; y < this.y; y++){
 			controller.setColor(x, y, background);
 		}
 	}
@@ -75,12 +77,20 @@ public abstract class Character implements Drawable {
 		return name;
 	}
 
-	public int getGroeﬂe() {
-		return groeﬂe;
+	public int getSize() {
+		return size;
 	}
 
-	public void setGroeﬂe(int groeﬂe) {
-		this.groeﬂe = groeﬂe;
+	public void setSize(int size) {
+		this.size = size;
+	}
+	
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public int getState() {
+		return state;
 	}
 
 }
