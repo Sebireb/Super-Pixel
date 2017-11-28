@@ -13,12 +13,12 @@ import worlds.World;
 public class MyFirstBoard {
 	
 	static BoardController controller = BoardController.getBoardController();
-	public final static int[] background = new int[]{127, 127, 127};
+	public final static int[] background = new int[]{0, 0, 0};
 	final static int[][] brick = new int[][]{{127,80,30}};
 	final static int[][] eventBlock = new int[][]{{127,127,0},{127, 40, 0}};
 	private static World w;
 	private static  KeyBuffer input;
-	private static Update update;
+	private static Thread t;
 
 	public static void main(String[] args) {
 		
@@ -40,8 +40,8 @@ public class MyFirstBoard {
 		Character[] c = new Character[]{new Mario(6, 6, Character.MARIO, 1, controller, background)};
 		w = new World(b, c, controller);
 		
-		update = new Update(controller, b, c, background);
-		update.start();
+		t = new Thread(new Update(controller, b, c, background));
+		t.start();
 		
 		while(true){
 			processInput(input.pop());
@@ -60,7 +60,7 @@ public class MyFirstBoard {
 	}
 	
 	public static void jump() {
-		w.jump();
+		w.getMario().jump();
 	}
 	
 	public static void processInput(KeyEvent e){

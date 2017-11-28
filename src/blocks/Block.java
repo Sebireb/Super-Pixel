@@ -10,7 +10,6 @@ public abstract class Block implements Drawable {
 	public final static int[][] GRASS = new int[][] {{0, 127, 0}};
 	
 	BoardController controller;
-	int colors[][][];
 	String name;
 	int x;
 	int y;
@@ -18,13 +17,12 @@ public abstract class Block implements Drawable {
 	int background[];
 	int state;
 
-	public Block(int px, int py, int pcolor[][], BoardController pController, int pBackground[]) {
-		x = px;
-		y = py;
-		color = pcolor;
-		controller = pController;
-		colors = controller.getColors();
-		background = pBackground;
+	public Block(int x, int y, int color[][], BoardController controller, int background[]) {
+		this.x = x;
+		this.y = y;
+		this.color = color;
+		this.controller = controller;
+		this.background = background;
 		state = 0;
 		draw();
 	}
@@ -40,7 +38,6 @@ public abstract class Block implements Drawable {
 	}
 	
 	public void move(int dx, int dy){
-		clear();
 		x += dx;
 		y += dy;
 	}

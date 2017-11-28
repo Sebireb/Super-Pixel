@@ -8,61 +8,42 @@ public abstract class Character implements Drawable {
 	public final static int[][] MARIO = new int[][] {{127,0,0}};
 	
 	BoardController controller;
-	int colors[][][];
 	String name;
-	int x;
-	int y;
+	double x;
+	double y;
 	int color[][];
 	int size;
 	int state;
 	int[] background;
 
-	public Character(int px, int py, int pcolor[][], int pSize, BoardController pController, int[] pBackground) {
-		x = px;
-		y = py;
-		color = pcolor;
-		size = pSize;
-		controller = pController;
-		colors = controller.getColors();
-		background = pBackground;
+	public Character(double x, double y, int color[][], int size, BoardController controller, int[] background) {
+		this.x = x;
+		this.y = y;
+		this.color = color;
+		this.size = size;
+		this.controller = controller;
+		this.background = background;
 		state = 0;
 		draw();
 	}
 
 	@Override
 	public void draw() {
-		for(int y = this.y-size; y < this.y; y++){
-			controller.setColor(x, y, color[state]);
+		for(double y = this.y-size; y < this.y; y++){
+			controller.setColor((int) Math.round(x), (int)Math.round(y), color[state]);
 		}	
 	}
 
 	@Override
 	public void clear() {
-		for(int y = this.y-size; y < this.y; y++){
-			controller.setColor(x, y, background);
-		}
+		for(double y = this.y-size; y < this.y; y++){
+			controller.setColor((int) Math.round(x), (int)Math.round(y), background);
+		}	
 	}
 	
 	public void move(int dx, int dy){
-		clear();
 		x += dx;		
 		y += dy;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
 	}
 
 	public int[][] getColor() {
@@ -91,6 +72,22 @@ public abstract class Character implements Drawable {
 
 	public int getState() {
 		return state;
+	}
+
+	public double getX() {
+		return x;
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void setY(double y) {
+		this.y = y;
 	}
 
 }

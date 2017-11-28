@@ -4,8 +4,8 @@ import ledControl.BoardController;
 
 public class Grass extends Block{
 
-	public Grass(int px, int py, int[][] pcolor, BoardController pController, int[] pBackground) {
-		super(px, py, pcolor, pController, pBackground);
+	public Grass(int x, int y, int[][] color, BoardController controller, int[] background){
+		super(x, y, color, controller, background);
 		name = "Grass";
 	}
 

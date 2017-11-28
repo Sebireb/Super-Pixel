@@ -4,8 +4,8 @@ import ledControl.BoardController;
 
 public class Brick extends Block {
 
-	public Brick(int px, int py, int[][] pcolor, BoardController pController, int[] pBackground) {
-		super(px, py, pcolor, pController, pBackground);
+	public Brick(int x, int y, int[][] color, BoardController controller, int[] background) {
+		super(x, y, color, controller, background);
 		name = "Brick";
 	}
 

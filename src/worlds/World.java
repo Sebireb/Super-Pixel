@@ -31,10 +31,6 @@ public class World {
 		}
 	}
 	
-	public void jump() {
-		mario.move(0, -2);
-	}
-	
 	public boolean isSolid(int x, int y){
 		for(int i = 0; i < blocks.length; i++){
 			if(blocks[i].getX() == x && blocks[i].getY() == y){
@@ -54,10 +50,13 @@ public class World {
 	}
 	
 	public void fall() {
-		if(! isSolid(mario.getX(), mario.getY())) {
+		if(! isSolid(Math.round((int)mario.getX()), (int)Math.round(mario.getY()))) {
 			mario.move(0, 1);
-			mario.draw();
 		}
+	}
+
+	public Mario getMario() {
+		return mario;
 	}
 
 }

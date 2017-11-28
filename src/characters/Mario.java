@@ -4,12 +4,14 @@ import ledControl.BoardController;
 
 public class Mario extends Character {
 	
-	int lives = 1;
-	int coins = 0;
+	int lives;
+	int coins;
 
-	public Mario(int px, int py, int[][] pcolor, int pgroeﬂe, BoardController pController, int[] pBackground) {
-		super(px, py, pcolor, pgroeﬂe, pController, pBackground);
+	public Mario(int x, int y, int[][] color, int size, BoardController controller, int[] background) {
+		super(x, y, color, size, controller, background);
 		name = "Mario";
+		lives = 1;
+		coins = 0;
 	}
 	
 	public void grow() {
@@ -31,11 +33,17 @@ public class Mario extends Character {
 			lives = 0;
 			clear();
 			size = 0;
+			
+			//GAMEOVER
 		}
 	}
 	
 	public void pickUpCoin(int amount) {
 		coins += amount;
+	}
+	
+	public void jump(){
+		move(0, -2);
 	}
 
 }
