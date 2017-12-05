@@ -18,7 +18,7 @@ public class MyFirstBoard {
 	final static int[][] eventBlock = new int[][]{{127,127,0},{127, 40, 0}};
 	private static World w;
 	private static KeyBuffer input;
-	private static Thread t;
+	private static Thread t, t2;
 
 	public static void main(String[] args) {
 		
@@ -33,9 +33,12 @@ public class MyFirstBoard {
 		
 		//TESTCODE
 		
-		Block[] b = new Block[50];
-		for(int x = -15; x < 35; x++) {
+		Block[] b = new Block[40];
+		for(int x = -15; x < 15; x++) {
 			b[x+15] = new Grass(x, 11, Block.GRASS, controller, background);
+		}
+		for(int x = -5; x < 5; x++) {
+			b[x+35] = new Grass(x, 5, Block.GRASS, controller, background);
 		}
 		Character[] c = new Character[]{new Mario(6, 6, Character.MARIO, 1, controller, background)};
 		w = new World(b, c, controller);
@@ -43,26 +46,27 @@ public class MyFirstBoard {
 		t = new Thread(new Update(controller, b, c, background));
 		t.start();
 		
+		t2 = new Thread(new xMovement(b, c, w.getMario()));
+		t2.start();
+		
 		while(true){
 			processInput(input.pop());
 			input.clear();
 			w.move();
-			controller.sleep(200);
+			controller.sleep(1);
 		}
 	}
 	
 	public static void goRight(){
-		if(w.getMario().getSpeedx()>1.5){
-			return;
-		}
-		w.getMario().addSpeedX(0.5);
+		w.getMario().setDirection(-1);
 	}
 	
 	public static void goLeft(){
-		if(w.getMario().getSpeedx()<-1.5){
-			return;
-		}
-		w.getMario().addSpeedX(-0.5);
+		w.getMario().setDirection(1);
+	}
+	
+	public static void stopXMovement() {
+		w.getMario().setDirection(0);
 	}
 	
 	public static void jump() {
@@ -84,6 +88,11 @@ public class MyFirstBoard {
 			}
 			if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 				jump();
+			}
+		}
+		if(e.getID() == KeyEvent.KEY_RELEASED){
+			if(e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_D){
+				stopXMovement();
 			}
 		}
 	}

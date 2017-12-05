@@ -6,6 +6,7 @@ public class Mario extends Character {
 	
 	int lives;
 	int coins;
+	int direction = 0;
 
 	public Mario(int x, int y, int[][] color, int size, BoardController controller, int[] background) {
 		super(x, y, color, size, controller, background);
@@ -46,6 +47,14 @@ public class Mario extends Character {
 	
 	public void jump(){
 		addSpeedY(-1.5);
+	}
+	
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+	
+	public int getDirection() {
+		return direction;
 	}
 
 }

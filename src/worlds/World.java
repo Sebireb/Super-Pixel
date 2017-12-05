@@ -22,14 +22,7 @@ public class World {
 	
 	public void move(){
 		fall();
-		for(int i = 0; i < blocks.length; i++){
-			blocks[i].move(-mario.getSpeedx(), 0);	
-		}
-		for(int i = 0; i < characters.length; i++){
-			if(!characters[i].getName().equals("Mario")){
-				characters[i].move(-mario.getSpeedx(), 0);
-			}else characters[i].move(0, mario.getSpeedy());
-		}
+		mario.move(0, mario.getSpeedy());
 	}
 	
 	public void move(int dx, int dy){
