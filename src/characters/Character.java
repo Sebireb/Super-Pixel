@@ -11,6 +11,8 @@ public abstract class Character implements Drawable {
 	String name;
 	double x;
 	double y;
+	double speedx;
+	double speedy;
 	int color[][];
 	int size;
 	int state;
@@ -41,9 +43,17 @@ public abstract class Character implements Drawable {
 		}	
 	}
 	
-	public void move(int dx, int dy){
+	public void move(double dx, double dy){
 		x += dx;		
 		y += dy;
+	}
+	
+	public void addSpeedX(double speed){
+		speedx += speed;
+	}
+	
+	public void addSpeedY(double speed){
+		speedy += speed;
 	}
 
 	public int[][] getColor() {
@@ -88,6 +98,22 @@ public abstract class Character implements Drawable {
 
 	public void setY(double y) {
 		this.y = y;
+	}
+
+	public double getSpeedx() {
+		return speedx;
+	}
+
+	public void setSpeedx(double speedx) {
+		this.speedx = speedx;
+	}
+
+	public double getSpeedy() {
+		return speedy;
+	}
+
+	public void setSpeedy(double speedy) {
+		this.speedy = speedy;
 	}
 
 }

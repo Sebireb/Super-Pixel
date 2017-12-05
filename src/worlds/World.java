@@ -20,6 +20,18 @@ public class World {
 		controller.updateLedStripe();
 	}
 	
+	public void move(){
+		fall();
+		for(int i = 0; i < blocks.length; i++){
+			blocks[i].move(-mario.getSpeedx(), 0);	
+		}
+		for(int i = 0; i < characters.length; i++){
+			if(!characters[i].getName().equals("Mario")){
+				characters[i].move(-mario.getSpeedx(), 0);
+			}else characters[i].move(0, mario.getSpeedy());
+		}
+	}
+	
 	public void move(int dx, int dy){
 		for(int i = 0; i < blocks.length; i++){
 			blocks[i].move(dx, dy);	
@@ -31,11 +43,18 @@ public class World {
 		}
 	}
 	
-	public boolean isSolid(int x, int y){
+	public boolean isSolid(double x, double y){
 		for(int i = 0; i < blocks.length; i++){
-			if(blocks[i].getX() == x && blocks[i].getY() == y){
+			if((int)Math.round(blocks[i].getX()) == (int)Math.round(x) && (int) Math.round(blocks[i].getY()) == (int) Math.round(y)){
 				return true;
 			}
+		}
+		return false;
+	}
+	
+	public boolean blockBelowMario(){
+		if(isSolid(Math.round((int)mario.getX()), (int)Math.round(mario.getY()))){
+			return true;
 		}
 		return false;
 	}
@@ -50,8 +69,13 @@ public class World {
 	}
 	
 	public void fall() {
-		if(! isSolid(Math.round((int)mario.getX()), (int)Math.round(mario.getY()))) {
-			mario.move(0, 1);
+		if(! blockBelowMario()) {
+			if(mario.getSpeedy() > 1.5){
+				return;
+			}
+			mario.addSpeedY(0.5);
+		}else if(mario.getSpeedy() > 0){
+			mario.setSpeedy(0);
 		}
 	}
 

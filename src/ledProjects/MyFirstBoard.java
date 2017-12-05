@@ -17,7 +17,7 @@ public class MyFirstBoard {
 	final static int[][] brick = new int[][]{{127,80,30}};
 	final static int[][] eventBlock = new int[][]{{127,127,0},{127, 40, 0}};
 	private static World w;
-	private static  KeyBuffer input;
+	private static KeyBuffer input;
 	private static Thread t;
 
 	public static void main(String[] args) {
@@ -45,22 +45,30 @@ public class MyFirstBoard {
 		
 		while(true){
 			processInput(input.pop());
-			w.fall();
 			input.clear();
+			w.move();
 			controller.sleep(200);
 		}
 	}
 	
 	public static void goRight(){
-		w.move(-1, 0);
+		if(w.getMario().getSpeedx()>1.5){
+			return;
+		}
+		w.getMario().addSpeedX(0.5);
 	}
 	
 	public static void goLeft(){
-		w.move(1, 0);
+		if(w.getMario().getSpeedx()<-1.5){
+			return;
+		}
+		w.getMario().addSpeedX(-0.5);
 	}
 	
 	public static void jump() {
-		w.getMario().jump();
+		if(w.blockBelowMario()){
+			w.getMario().jump();
+		}
 	}
 	
 	public static void processInput(KeyEvent e){

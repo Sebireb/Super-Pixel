@@ -12,6 +12,8 @@ public class Mario extends Character {
 		name = "Mario";
 		lives = 1;
 		coins = 0;
+		speedx = 0;
+		speedy = 0;
 	}
 	
 	public void grow() {
@@ -43,7 +45,7 @@ public class Mario extends Character {
 	}
 	
 	public void jump(){
-		move(0, -2);
+		addSpeedY(-1.5);
 	}
 
 }
