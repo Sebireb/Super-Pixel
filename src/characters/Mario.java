@@ -45,7 +45,7 @@ public class Mario extends Character {
 	}
 	
 	public void jump(){
-		addSpeedY(-1.5);
+		addSpeedY(-1);
 	}
 
 }

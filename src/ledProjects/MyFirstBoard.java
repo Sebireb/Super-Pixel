@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 
 import Threads.Update;
 import Threads.xMovement;
+import Threads.yMovement;
 import blocks.Block;
 import blocks.Grass;
 import characters.Character;
@@ -20,7 +21,7 @@ public class MyFirstBoard {
 	final static int[][] eventBlock = new int[][]{{127,127,0},{127, 40, 0}};
 	private static World w;
 	private static KeyBuffer input;
-	private static Thread t, t2;
+	private static Thread t, t2, t3;
 
 	public static void main(String[] args) {
 		
@@ -53,11 +54,17 @@ public class MyFirstBoard {
 		t2 = new Thread(new xMovement(b, c, w.getMario()));
 		t2.start();
 		
+		t3 = new Thread(new yMovement(w));
+		t3.start();
+		
 		while(true){
 			processInput(input.pop());
 			input.clear();
-			w.move();
-			controller.sleep(1);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

@@ -20,11 +20,6 @@ public class World {
 		controller.updateLedStripe();
 	}
 	
-	public void move(){
-		fall();
-		mario.move(0, mario.getSpeedy());
-	}
-	
 	public void move(int dx, int dy){
 		for(int i = 0; i < blocks.length; i++){
 			blocks[i].move(dx, dy);	
@@ -63,10 +58,10 @@ public class World {
 	
 	public void fall() {
 		if(! blockBelowMario()) {
-			if(mario.getSpeedy() > 1.5){
+			if(mario.getSpeedy() > 0.3){
 				return;
 			}
-			mario.addSpeedY(0.5);
+			mario.addSpeedY(0.1);
 		}else if(mario.getSpeedy() > 0){
 			mario.setSpeedy(0);
 		}
