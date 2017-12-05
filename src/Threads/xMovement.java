@@ -1,4 +1,4 @@
-package ledProjects;
+package Threads;
 
 import blocks.Block;
 import characters.Character;
@@ -21,7 +21,7 @@ public class xMovement implements Runnable{
 	public void run() {
 		int direction;
 		while(true) {
-			direction = m.getDirection();
+			direction = (int) m.getSpeedx();
 			for(int i = 0; i < b.length; i++) {
 				b[i].move(direction * SPEED, 0);
 			}

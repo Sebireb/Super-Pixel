@@ -2,6 +2,8 @@ package ledProjects;
 
 import java.awt.event.KeyEvent;
 
+import Threads.Update;
+import Threads.xMovement;
 import blocks.Block;
 import blocks.Grass;
 import characters.Character;
@@ -43,6 +45,8 @@ public class MyFirstBoard {
 		Character[] c = new Character[]{new Mario(6, 6, Character.MARIO, 1, controller, background)};
 		w = new World(b, c, controller);
 		
+		//-----------
+		
 		t = new Thread(new Update(controller, b, c, background));
 		t.start();
 		
@@ -58,15 +62,15 @@ public class MyFirstBoard {
 	}
 	
 	public static void goRight(){
-		w.getMario().setDirection(-1);
+		w.getMario().setSpeedx(-1);
 	}
 	
 	public static void goLeft(){
-		w.getMario().setDirection(1);
+		w.getMario().setSpeedx(1);
 	}
 	
 	public static void stopXMovement() {
-		w.getMario().setDirection(0);
+		w.getMario().setSpeedx(0);
 	}
 	
 	public static void jump() {

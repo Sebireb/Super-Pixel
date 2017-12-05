@@ -1,4 +1,4 @@
-package ledProjects;
+package Threads;
 
 import characters.Character;
 import blocks.Block;
