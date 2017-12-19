@@ -1,20 +1,27 @@
 package Threads;
 
-import characters.Character;
+import java.util.ArrayList;
+import java.util.List;
+
 import blocks.Block;
+import characters.Character;
 import ledControl.BoardController;
+import ledProjects.Drawable;
 
 public class Update implements Runnable {
 
-	BoardController controller;
-	Block[] blocks;
-	Character[] characters;
+	private BoardController controller;
+	private List<Drawable> drawables = new ArrayList<Drawable>();
 	int[] background;
 	
 	public Update(BoardController controller, Block[] blocks, Character[] characters, int[] background) {
 		this.controller = controller;
-		this.blocks = blocks;
-		this.characters = characters;
+		for(Block block : blocks) {
+			drawables.add(block);
+		}
+		for(Character character : characters) {
+			drawables.add(character);
+		}
 		this.background = background;
 	}
 	
@@ -31,11 +38,8 @@ public class Update implements Runnable {
 					controller.setColor(x, y, background);
 				}
 			}
-			for(int i = 0; i < blocks.length; i++) {
-				blocks[i].draw();
-			}
-			for(int i = 0; i < characters.length; i++){
-				characters[i].draw();
+			for(Drawable drawable : drawables) {
+				drawable.draw();
 			}
 			
 			controller.updateLedStripe();

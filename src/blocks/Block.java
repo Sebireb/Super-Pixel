@@ -2,9 +2,10 @@ package blocks;
 
 import ledControl.BoardController;
 import ledProjects.Drawable;
+import worlds.World;
 
 public abstract class Block implements Drawable {
-	
+
 	public final static int[][] EVENTBLOCK = new int[][]{{127, 127, 0},{127, 50, 50}};
 	public final static int[][] BRICK = new int[][] {{127, 70, 20}};
 	public final static int[][] GRASS = new int[][] {{0, 127, 0}};
@@ -29,13 +30,16 @@ public abstract class Block implements Drawable {
 
 	@Override
 	public void draw() {
-		controller.setColor((int) Math.round(x), (int) Math.round(y), color[state]);
+		controller.setColor((int) Math.round(x) + World.getXOffset(), (int) Math.round(y), color[state]);
 	}
 
 	@Override
 	public void clear() {
-		controller.setColor((int) Math.round(x), (int) Math.round(y), background);
+		controller.setColor((int) Math.round(x) + World.getXOffset(), (int) Math.round(y), background);
 	}
+	
+	@Override
+	public void collide() {	}
 	
 	public void move(double dx, double dy){
 		x += dx;

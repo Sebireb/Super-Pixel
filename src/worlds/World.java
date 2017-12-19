@@ -4,19 +4,33 @@ import blocks.Block;
 import characters.Character;
 import characters.Mario;
 import ledControl.BoardController;
+import ledProjects.Drawable;
 
 public class World {
+	private static final double MAX_FALL_SPEED = 0.3;
 	
 	BoardController controller;
 	Block[] blocks;
 	Character[] characters;
 	Mario mario;
+	private static boolean movement;
+	private Drawable[][] drawables;
+	private static double xOffset;
 
-	public World(Block[] pBlocks, Character[] pCharacters, BoardController pController) {
-		controller = pController;
-		blocks = pBlocks;
-		characters = pCharacters;
+	public World(Block[] blocks, Character[] characters, BoardController controller, int sizeX, int sizeY) {
+		this.controller = controller;
+		this.blocks = blocks;
+		this.characters = characters;
+		drawables = new Drawable[sizeX][sizeY];
+		for(Block b : blocks) {
+			drawables[(int)b.getX()][(int)b.getY()] = b;
+		}
+		for(Character c : characters) {
+			drawables[(int)c.getX()][(int)c.getY()] = c;
+		}
 		mario = (Mario) characters[0];
+		allowMovement(true);
+		xOffset = 0;
 		controller.updateLedStripe();
 	}
 	
@@ -30,10 +44,18 @@ public class World {
 			}
 		}
 	}
+
+	public Drawable getCollideable(int x, int y) {
+		try {
+			return drawables[x - (int) Math.round(xOffset)][y];
+		} catch (IndexOutOfBoundsException e) { // Auﬂerhalb der Map
+			return null;
+		}
+	}
 	
 	public boolean isSolid(double x, double y){
-		for(int i = 0; i < blocks.length; i++){
-			if((int)Math.round(blocks[i].getX()) == (int)Math.round(x) && (int) Math.round(blocks[i].getY()) == (int) Math.round(y)){
+		for(Block b : blocks){
+			if((int)Math.round(b.getX()) == (int)Math.round(x) && (int) Math.round(b.getY()) == (int) Math.round(y)){
 				return true;
 			}
 		}
@@ -41,7 +63,7 @@ public class World {
 	}
 	
 	public boolean blockBelowMario(){
-		if(isSolid(Math.round((int)mario.getX()), (int)Math.round(mario.getY()))){
+		if(getCollideable((int)Math.round(mario.getX()), (int)Math.round(mario.getY())) != null){
 			return true;
 		}
 		return false;
@@ -58,7 +80,7 @@ public class World {
 	
 	public void fall() {
 		if(! blockBelowMario()) {
-			if(mario.getSpeedy() > 0.3){
+			if(mario.getSpeedy() > MAX_FALL_SPEED){
 				return;
 			}
 			mario.addSpeedY(0.1);
@@ -69,6 +91,30 @@ public class World {
 
 	public Mario getMario() {
 		return mario;
+	}
+
+	public Block[] getBlocks() {
+		return blocks;
+	}
+
+	public Character[] getCharacters() {
+		return characters;
+	}
+
+	public static boolean isMovementAllowed() {
+		return movement;
+	}
+
+	public static void allowMovement(boolean movement) {
+		World.movement = movement;
+	}
+	
+	public void addXOffset(double xOffset) {
+		World.xOffset += xOffset;
+	}
+	
+	public static int getXOffset() {
+		return (int) Math.round(xOffset);
 	}
 
 }

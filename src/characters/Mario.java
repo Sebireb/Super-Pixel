@@ -14,6 +14,21 @@ public class Mario extends Character {
 		coins = 0;
 		speedx = 0;
 		speedy = 0;
+		player = true;
+	}
+	
+	@Override
+	public void draw() {
+		for(double y = this.y-size; y < this.y; y++){
+			controller.setColor((int) Math.round(x), (int)Math.round(y), color[state]);
+		}	
+	}
+	
+	@Override
+	public void  clear() {
+		for(double y = this.y-size; y < this.y; y++){
+			controller.setColor((int) Math.round(x), (int)Math.round(y), background);
+		}
 	}
 	
 	public void grow() {

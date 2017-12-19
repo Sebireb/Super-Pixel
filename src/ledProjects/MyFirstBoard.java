@@ -36,22 +36,25 @@ public class MyFirstBoard {
 		
 		//TESTCODE
 		
-		Block[] b = new Block[40];
-		for(int x = -15; x < 15; x++) {
-			b[x+15] = new Grass(x, 11, Block.GRASS, controller, background);
+		Block[] b = new Block[42];
+		for(int x = 0; x < 30; x++) {
+			b[x] = new Grass(x, 11, Block.GRASS, controller, background);
 		}
-		for(int x = -5; x < 5; x++) {
-			b[x+35] = new Grass(x, 5, Block.GRASS, controller, background);
+		for(int x = 0; x < 10; x++) {
+			b[x+30] = new Grass(x, 5, Block.GRASS, controller, background);
 		}
-		Character[] c = new Character[]{new Mario(6, 6, Character.MARIO, 1, controller, background)};
-		w = new World(b, c, controller);
+		
+		b[40] = new Grass(10, 9, Block.GRASS, controller, background);
+		b[41] = new Grass(10, 10, Block.GRASS, controller, background);
+		Character[] c = new Character[]{new Mario(6, 5, Character.MARIO, 1, controller, background)};
+		w = new World(b, c, controller, 100, 12);
 		
 		//-----------
 		
 		t = new Thread(new Update(controller, b, c, background));
 		t.start();
 		
-		t2 = new Thread(new xMovement(b, c, w.getMario()));
+		t2 = new Thread(new xMovement(w, w.getMario()));
 		t2.start();
 		
 		t3 = new Thread(new yMovement(w));

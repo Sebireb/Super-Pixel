@@ -2,8 +2,9 @@ package characters;
 
 import ledControl.BoardController;
 import ledProjects.Drawable;
+import worlds.World;
 
-public abstract class Character implements Drawable {
+public abstract class Character implements Drawable{
 	
 	public final static int[][] MARIO = new int[][] {{127,0,0}};
 	
@@ -17,6 +18,7 @@ public abstract class Character implements Drawable {
 	int size;
 	int state;
 	int[] background;
+	protected boolean player = false;
 
 	public Character(double x, double y, int color[][], int size, BoardController controller, int[] background) {
 		this.x = x;
@@ -32,15 +34,20 @@ public abstract class Character implements Drawable {
 	@Override
 	public void draw() {
 		for(double y = this.y-size; y < this.y; y++){
-			controller.setColor((int) Math.round(x), (int)Math.round(y), color[state]);
+			controller.setColor((int) Math.round(x) + World.getXOffset(), (int)Math.round(y), color[state]);
 		}	
 	}
 
 	@Override
 	public void clear() {
 		for(double y = this.y-size; y < this.y; y++){
-			controller.setColor((int) Math.round(x), (int)Math.round(y), background);
+			controller.setColor((int) Math.round(x) + World.getXOffset(), (int)Math.round(y), background);
 		}	
+	}
+	
+	@Override
+	public void collide() {
+		
 	}
 	
 	public void move(double dx, double dy){
@@ -114,6 +121,10 @@ public abstract class Character implements Drawable {
 
 	public void setSpeedy(double speedy) {
 		this.speedy = speedy;
+	}
+
+	public boolean isPlayer() {
+		return player;
 	}
 
 }
