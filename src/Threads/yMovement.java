@@ -17,7 +17,7 @@ public class yMovement implements Runnable {
 	public void run() {
 		while(true) {
 			w.fall();
-			m.move(0, m.getSpeedy());
+			m.move(0, m.getSpeedY());
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {

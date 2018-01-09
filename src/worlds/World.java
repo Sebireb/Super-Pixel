@@ -80,12 +80,12 @@ public class World {
 	
 	public void fall() {
 		if(! blockBelowMario()) {
-			if(mario.getSpeedy() > MAX_FALL_SPEED){
+			if(mario.getSpeedY() > MAX_FALL_SPEED){
 				return;
 			}
 			mario.addSpeedY(0.1);
-		}else if(mario.getSpeedy() > 0){
-			mario.setSpeedy(0);
+		}else if(mario.getSpeedY() > 0){
+			mario.setSpeedY(0);
 		}
 	}
 

@@ -27,7 +27,7 @@ public class xMovement implements Runnable{
 		double nextX;
 		Drawable drawable;
 		while(true) {
-			direction = (int) m.getSpeedx();
+			direction = (int) m.getSpeedX();
 			nextX = m.getX() - direction;
 			drawable = w.getCollideable((int)Math.round(nextX), (int) Math.round(m.getY() - 0.5));
 			if (drawable != null) {

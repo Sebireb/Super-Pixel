@@ -107,19 +107,19 @@ public abstract class Character implements Drawable{
 		this.y = y;
 	}
 
-	public double getSpeedx() {
+	public double getSpeedX() {
 		return speedx;
 	}
 
-	public void setSpeedx(double speedx) {
+	public void setSpeedX(double speedx) {
 		this.speedx = speedx;
 	}
 
-	public double getSpeedy() {
+	public double getSpeedY() {
 		return speedy;
 	}
 
-	public void setSpeedy(double speedy) {
+	public void setSpeedY(double speedy) {
 		this.speedy = speedy;
 	}
 

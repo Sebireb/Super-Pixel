@@ -72,15 +72,15 @@ public class MyFirstBoard {
 	}
 	
 	public static void goRight(){
-		w.getMario().setSpeedx(-1);
+		w.getMario().setSpeedX(-1);
 	}
 	
 	public static void goLeft(){
-		w.getMario().setSpeedx(1);
+		w.getMario().setSpeedX(1);
 	}
 	
 	public static void stopXMovement() {
-		w.getMario().setSpeedx(0);
+		w.getMario().setSpeedX(0);
 	}
 	
 	public static void jump() {
