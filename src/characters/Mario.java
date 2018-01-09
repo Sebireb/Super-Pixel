@@ -7,8 +7,8 @@ public class Mario extends Character {
 	int lives;
 	int coins;
 
-	public Mario(int x, int y, int[][] color, int size, BoardController controller, int[] background) {
-		super(x, y, color, size, controller, background);
+	public Mario(int x, int y, int size, BoardController controller, int[] background) {
+		super(x, y, Character.MARIO, size, controller, background);
 		name = "Mario";
 		lives = 1;
 		coins = 0;

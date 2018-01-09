@@ -4,8 +4,8 @@ import ledControl.BoardController;
 
 public class EventBlock extends Block{
 
-	public EventBlock(int x, int y, int[][] color, BoardController controller, int[] background){
-		super(x, y, color, controller, background);
+	public EventBlock(int x, int y, BoardController controller, int[] background){
+		super(x, y, Block.EVENTBLOCK, controller, background);
 		name = "?-Block";
 	}
 

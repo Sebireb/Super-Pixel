@@ -38,15 +38,15 @@ public class MyFirstBoard {
 		
 		Block[] b = new Block[42];
 		for(int x = 0; x < 30; x++) {
-			b[x] = new Grass(x, 11, Block.GRASS, controller, background);
+			b[x] = new Grass(x, 11, controller, background);
 		}
 		for(int x = 0; x < 10; x++) {
-			b[x+30] = new Grass(x, 5, Block.GRASS, controller, background);
+			b[x+30] = new Grass(x, 5, controller, background);
 		}
 		
-		b[40] = new Grass(10, 9, Block.GRASS, controller, background);
-		b[41] = new Grass(10, 10, Block.GRASS, controller, background);
-		Character[] c = new Character[]{new Mario(6, 5, Character.MARIO, 1, controller, background)};
+		b[40] = new Grass(10, 9, controller, background);
+		b[41] = new Grass(10, 10,  controller, background);
+		Character[] c = new Character[]{new Mario(6, 5, 1, controller, background)};
 		w = new World(b, c, controller, 100, 12);
 		
 		//-----------
