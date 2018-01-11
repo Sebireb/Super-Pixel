@@ -22,6 +22,7 @@ public class MyFirstBoard {
 	private static World w;
 	private static KeyBuffer input;
 	private static Thread t, t2, t3;
+	private static yMovement yMovement;
 
 	public static void main(String[] args) {
 		
@@ -46,7 +47,7 @@ public class MyFirstBoard {
 		
 		b[40] = new Grass(10, 9, controller, background);
 		b[41] = new Grass(10, 10,  controller, background);
-		Character[] c = new Character[]{new Mario(6, 5, 1, controller, background)};
+		Character[] c = new Character[]{new Mario(6, 0, 1, controller, background)};
 		w = new World(b, c, controller, 100, 12);
 		
 		//-----------
@@ -57,7 +58,9 @@ public class MyFirstBoard {
 		t2 = new Thread(new xMovement(w, w.getMario()));
 		t2.start();
 		
-		t3 = new Thread(new yMovement(w));
+		yMovement = new yMovement(w);
+		
+		t3 = new Thread(yMovement);
 		t3.start();
 		
 		while(true){
@@ -85,7 +88,7 @@ public class MyFirstBoard {
 	
 	public static void jump() {
 		if(w.blockBelowMario()){
-			w.getMario().jump();
+			yMovement.jump();
 		}
 	}
 	

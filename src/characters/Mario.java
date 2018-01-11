@@ -58,9 +58,5 @@ public class Mario extends Character {
 	public void pickUpCoin(int amount) {
 		coins += amount;
 	}
-	
-	public void jump(){
-		addSpeedY(-1);
-	}
 
 }
