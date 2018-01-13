@@ -39,14 +39,12 @@ public abstract class Block implements Drawable {
 	}
 	
 	@Override
-	public void collide() {	}
+	public void collide() { }
 	
 	public void move(double dx, double dy){
 		x += dx;
 		y += dy;
 	}
-	
-	abstract public void action();
 
 	public double getX() {
 		return x;

@@ -10,7 +10,7 @@ public class Brick extends Block {
 	}
 
 	@Override
-	public void action() {
+	public void collide() {
 		clear();
 	}
 

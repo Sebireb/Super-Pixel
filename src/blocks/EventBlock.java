@@ -10,7 +10,7 @@ public class EventBlock extends Block{
 	}
 
 	@Override
-	public void action() {
+	public void collide() {
 		state = 1;
 		draw();
 	}

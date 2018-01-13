@@ -10,8 +10,8 @@ public class Grass extends Block{
 	}
 
 	@Override
-	public void action() {
-		
+	public void collide() {
+		System.out.println("collision with a grass block");
 	}
 
 	

@@ -47,7 +47,7 @@ public class MyFirstBoard {
 		
 		b[40] = new Grass(10, 9, controller, background);
 		b[41] = new Grass(10, 10,  controller, background);
-		Character[] c = new Character[]{new Mario(6, 0, 1, controller, background)};
+		Character[] c = new Character[]{new Mario(6, 1, 1, controller, background)};
 		w = new World(b, c, controller, 100, 12);
 		
 		//-----------

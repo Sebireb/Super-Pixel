@@ -5,13 +5,15 @@ import worlds.World;
 
 public class yMovement implements Runnable {
 	
-	private final double TICKSPEED = 0.1;
+	private final double TICKSPEED = 0.05;
+	private final int MAXHEIGHT = 9;
 	
 	private Mario m;
 	private World w;
 	private boolean jump = false;
 	private int timeMillisec;
 	private double yBeforeJump;
+	private boolean falling;
 
 	public yMovement(World w) {
 		this.w = w;
@@ -28,15 +30,21 @@ public class yMovement implements Runnable {
 			if(jump){
 				timeMillisec += TICKSPEED * 1000;
 				double newY = calcY(timeMillisec);
+				System.out.println(newY);
+				if(newY == MAXHEIGHT){
+					falling = true;
+				}
+				if(falling && w.blockBelowMario()){
+					jump = false;
+				}
 				if(newY == 0){
 					jump = false;
 				}
 				m.setY(yBeforeJump - newY);
-				System.out.println(yBeforeJump + "\nnewY: " + newY + "\nInsg: "+(yBeforeJump - newY));
 			}
 			
 			try {
-				Thread.sleep((long) (1 / TICKSPEED));
+				Thread.sleep((long) (100 * TICKSPEED));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -47,6 +55,7 @@ public class yMovement implements Runnable {
 		jump = true;
 		timeMillisec = 0;
 		yBeforeJump = m.getY();
+		falling = false;
 	}
 	
 	public double calcY (int millisec){
