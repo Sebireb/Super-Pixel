@@ -2,10 +2,13 @@ package ledProjects;
 
 import java.awt.event.KeyEvent;
 
+import Items.Coin;
+import Items.Item;
 import Threads.Update;
 import Threads.xMovement;
 import Threads.yMovement;
 import blocks.Block;
+import blocks.EventBlock;
 import blocks.Grass;
 import characters.Character;
 import characters.Mario;
@@ -23,6 +26,7 @@ public class MyFirstBoard {
 	private static KeyBuffer input;
 	private static Thread t, t2, t3;
 	private static yMovement yMovement;
+	private static Update update;
 
 	public static void main(String[] args) {
 		
@@ -42,17 +46,31 @@ public class MyFirstBoard {
 			b[x] = new Grass(x, 11, controller, background);
 		}
 		for(int x = 0; x < 10; x++) {
-			b[x+30] = new Grass(x, 5, controller, background);
+			b[x+30] = new EventBlock(x, 5, controller, background, "coin");
 		}
 		
 		b[40] = new Grass(10, 9, controller, background);
 		b[41] = new Grass(10, 10,  controller, background);
 		Character[] c = new Character[]{new Mario(6, 1, 1, controller, background)};
-		w = new World(b, c, controller, 100, 12);
+		
+		Item[] i = new Item[10];
+		for(int x = 0; x < 10; x++) {
+			i[x] = new Coin(x, 6, controller, background);
+		}
+		
+		w = new World(b, c, i, controller, 100, 12);
+		
+		for(int x = 0; x < b.length; x++) {
+			b[x].setWorld(w);
+		}
+		for(int x = 0; x < 10; x++) {
+			i[x].setWorld(w);
+		}
 		
 		//-----------
 		
-		t = new Thread(new Update(controller, b, c, background));
+		update = new Update(controller, b, c, i, background);
+		t = new Thread(update);
 		t.start();
 		
 		t2 = new Thread(new xMovement(w, w.getMario()));
@@ -87,9 +105,15 @@ public class MyFirstBoard {
 	}
 	
 	public static void jump() {
-		if(w.blockBelowMario()){
+		if(w.drawableBelowMario() instanceof Block){
 			yMovement.jump();
 		}
+	}
+	
+	public static void removeDrawable(Drawable d) {
+		w.removeDrawable(d);
+		update.removeDrawable(d);
+		d.clear();
 	}
 	
 	public static void processInput(KeyEvent e){

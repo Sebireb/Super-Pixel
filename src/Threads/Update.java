@@ -3,6 +3,7 @@ package Threads;
 import java.util.ArrayList;
 import java.util.List;
 
+import Items.Item;
 import blocks.Block;
 import characters.Character;
 import ledControl.BoardController;
@@ -14,13 +15,16 @@ public class Update implements Runnable {
 	private List<Drawable> drawables = new ArrayList<Drawable>();
 	int[] background;
 	
-	public Update(BoardController controller, Block[] blocks, Character[] characters, int[] background) {
+	public Update(BoardController controller, Block[] blocks, Character[] characters, Item[] items, int[] background) {
 		this.controller = controller;
+		for(Character character : characters) {
+			drawables.add(character);
+		}
 		for(Block block : blocks) {
 			drawables.add(block);
 		}
-		for(Character character : characters) {
-			drawables.add(character);
+		for(Item item : items) {
+			drawables.add(item);
 		}
 		this.background = background;
 	}
@@ -44,6 +48,10 @@ public class Update implements Runnable {
 			
 			controller.updateLedStripe();
 		}
+	}
+	
+	public void removeDrawable(Drawable d) {
+		drawables.remove(d);
 	}
 
 }

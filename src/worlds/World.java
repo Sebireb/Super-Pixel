@@ -1,5 +1,6 @@
 package worlds;
 
+import Items.Item;
 import blocks.Block;
 import characters.Character;
 import characters.Mario;
@@ -12,21 +13,26 @@ public class World {
 	BoardController controller;
 	Block[] blocks;
 	Character[] characters;
+	Item[] items;
 	Mario mario;
 	private static boolean movement;
 	private Drawable[][] drawables;
 	private static double xOffset;
 
-	public World(Block[] blocks, Character[] characters, BoardController controller, int sizeX, int sizeY) {
+	public World(Block[] blocks, Character[] characters, Item[] items, BoardController controller, int sizeX, int sizeY) {
 		this.controller = controller;
 		this.blocks = blocks;
 		this.characters = characters;
+		this.items = items;
 		drawables = new Drawable[sizeX][sizeY];
 		for(Block b : blocks) {
 			drawables[(int)b.getX()][(int)b.getY()] = b;
 		}
 		for(Character c : characters) {
 			drawables[(int)c.getX()][(int)c.getY()] = c;
+		}
+		for(Item i : items) {
+			drawables[(int)i.getX()][(int)i.getY()] = i;
 		}
 		mario = (Mario) characters[0];
 		allowMovement(true);
@@ -48,38 +54,23 @@ public class World {
 	public Drawable getCollideable(int x, int y) {
 		try {
 			return drawables[x - (int) Math.round(xOffset)][y];
-		} catch (IndexOutOfBoundsException e) { // Auﬂerhalb der Map
+		} catch (IndexOutOfBoundsException e) { // Outside the map
 			return null;
 		}
 	}
 	
-	public boolean isSolid(double x, double y){
-		for(Block b : blocks){
-			if((int)Math.round(b.getX()) == (int)Math.round(x) && (int) Math.round(b.getY()) == (int) Math.round(y)){
-				return true;
-			}
-		}
-		return false;
+	public Drawable drawableBelowMario(){
+		Drawable d = getCollideable((int)Math.round(mario.getX()), (int)Math.round(mario.getY()));
+		return d;
 	}
 	
-	public boolean blockBelowMario(){
-		if(getCollideable((int)Math.round(mario.getX()), (int)Math.round(mario.getY())) != null){
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean isEnemy(int x, int y){
-		for(int i = 0; i < characters.length; i++){
-			if(characters[i].getX() == x && characters[i].getY() == y && !characters[i].getName().equals("Mario")){
-				return true;
-			}
-		}
-		return false;
+	public Drawable drawableAboveMario() {
+		Drawable d = getCollideable((int)Math.round(mario.getX()), (int)Math.round(mario.getY() - 1.5));
+		return d;
 	}
 	
 	public void fall() {
-		if(! blockBelowMario()) {
+		if(drawableBelowMario() == null) {
 			if(mario.getSpeedY() > MAX_FALL_SPEED){
 				return;
 			}
@@ -87,6 +78,12 @@ public class World {
 		}else if(mario.getSpeedY() > 0){
 			mario.setSpeedY(0);
 		}
+	}
+	
+	public void removeDrawable(Drawable d) {
+		int x = (int) Math.round(d.getX());
+		int y = (int) Math.round(d.getY());
+		drawables[x][y] = null;		
 	}
 
 	public Mario getMario() {
@@ -111,6 +108,10 @@ public class World {
 	
 	public void addXOffset(double xOffset) {
 		World.xOffset += xOffset;
+	}
+	
+	public Drawable[][] getDrawables(){
+		return drawables;
 	}
 	
 	public static int getXOffset() {

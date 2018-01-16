@@ -6,7 +6,7 @@ import worlds.World;
 
 public abstract class Block implements Drawable {
 
-	public final static int[][] EVENTBLOCK = new int[][]{{127, 127, 0},{127, 50, 50}};
+	public final static int[][] EVENTBLOCK = new int[][]{{127, 127, 0},{127, 80, 30}};
 	public final static int[][] BRICK = new int[][] {{127, 70, 20}};
 	public final static int[][] GRASS = new int[][] {{0, 127, 0}};
 	
@@ -17,6 +17,7 @@ public abstract class Block implements Drawable {
 	int color[][];	
 	int background[];
 	int state;
+	World w;
 
 	public Block(int x, int y, int color[][], BoardController controller, int background[]) {
 		this.x = x;
@@ -80,5 +81,9 @@ public abstract class Block implements Drawable {
 	
 	public int getState() {
 		return state;
+	}
+	
+	public void setWorld(World w) {
+		this.w = w;
 	}
 }

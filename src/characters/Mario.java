@@ -57,6 +57,7 @@ public class Mario extends Character {
 	
 	public void pickUpCoin(int amount) {
 		coins += amount;
+		System.out.println(coins);
 	}
 
 }

@@ -31,7 +31,6 @@ public class xMovement implements Runnable{
 			nextX = m.getX() - direction;
 			drawable = w.getCollideable((int)Math.round(nextX), (int) Math.round(m.getY() - 0.5));
 			if (drawable != null) {
-				drawable.collide();
 			}else {
 				w.addXOffset(direction / 10.0);
 			}
