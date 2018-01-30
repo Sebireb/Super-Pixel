@@ -3,6 +3,7 @@ package Threads;
 import Items.Item;
 import blocks.Block;
 import characters.Mario;
+import ledProjects.Drawable;
 import worlds.World;
 
 public class yMovement implements Runnable {
@@ -24,6 +25,7 @@ public class yMovement implements Runnable {
 
 	@Override
 	public void run() {
+		Drawable d;
 		while(true) {
 			
 			w.fall();
@@ -35,20 +37,22 @@ public class yMovement implements Runnable {
 				if(newY == MAXHEIGHT){
 					falling = true;
 				}
-				if(falling && w.drawableBelowMario() != null){
-					if (w.drawableBelowMario() instanceof Block) {
+				d = w.drawableBelowMario();
+				if(falling && d != null){
+					if (d instanceof Block) {
 						jump = false;
 					}else {
-						w.drawableBelowMario().collide();
+						d.collide();
 					}
 				}
-				if(!falling && w.drawableAboveMario() != null) {
-					if (w.drawableAboveMario() instanceof Block) {
+				d = w.drawableAboveMario();
+				if(!falling && d != null) {
+					if (d instanceof Block) {
 						jump = false;
-						w.getCollideable((int)Math.round(m.getX()), (int) Math.round(m.getY() - 1.5)).collide();
+						d.collide();
 					}else
-						if (w.drawableAboveMario() instanceof Item) {
-							w.getCollideable((int)Math.round(m.getX()), (int) Math.round(m.getY() - 1.5)).collide();
+						if (d instanceof Item) {
+							d.collide();
 						}else
 							w.getMario().damage();
 				}

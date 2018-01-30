@@ -4,8 +4,11 @@ import ledControl.BoardController;
 
 public class Mario extends Character {
 	
+	final static long COLLISIONDELAY = 1000;
+	
 	int lives;
 	int coins;
+	long lastCollision = System.currentTimeMillis();
 
 	public Mario(int x, int y, int size, BoardController controller, int[] background) {
 		super(x, y, Character.MARIO, size, controller, background);
@@ -58,6 +61,14 @@ public class Mario extends Character {
 	public void pickUpCoin(int amount) {
 		coins += amount;
 		System.out.println(coins);
+	}
+
+	@Override
+	public void collide() {
+		if (System.currentTimeMillis() - lastCollision >= COLLISIONDELAY) {
+			damage();
+			lastCollision = System.currentTimeMillis();	
+		}
 	}
 
 }

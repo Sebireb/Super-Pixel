@@ -11,7 +11,7 @@ public class Grass extends Block{
 
 	@Override
 	public void collide() {
-		System.out.println("collision with a grass block");
+		
 	}
 
 	

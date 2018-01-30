@@ -1,0 +1,21 @@
+package characters;
+
+import ledControl.BoardController;
+import ledProjects.MyFirstBoard;
+
+public class Gumba extends Character {
+	
+	private static final double DEFAULT_SPEED = 0.01;
+
+	public Gumba(double x, double y, int size, BoardController controller, int[] background) {
+		super(x, y, GUMBA, size, controller, background);
+		speedy = 0;
+		speedx = DEFAULT_SPEED;
+	}
+
+	@Override
+	public void collide() {
+		MyFirstBoard.removeDrawable(this);
+	}
+
+}

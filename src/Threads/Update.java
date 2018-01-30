@@ -15,17 +15,11 @@ public class Update implements Runnable {
 	private List<Drawable> drawables = new ArrayList<Drawable>();
 	int[] background;
 	
-	public Update(BoardController controller, Block[] blocks, Character[] characters, Item[] items, int[] background) {
+	public Update(BoardController controller, List<Block> blocks, List<Character> characters, List<Item> items, int[] background) {
 		this.controller = controller;
-		for(Character character : characters) {
-			drawables.add(character);
-		}
-		for(Block block : blocks) {
-			drawables.add(block);
-		}
-		for(Item item : items) {
-			drawables.add(item);
-		}
+		drawables.addAll(blocks);
+		drawables.addAll(items);
+		drawables.addAll(characters);
 		this.background = background;
 	}
 	

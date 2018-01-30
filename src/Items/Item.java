@@ -7,6 +7,7 @@ import worlds.World;
 public abstract class Item implements Drawable {
 	
 	public final static int[] COIN = new int[]{90, 90, 0};
+	public final static int[] MUSHROOM = new int[]{90, 0, 0};
 
 	BoardController controller;
 	String type;
@@ -34,9 +35,7 @@ public abstract class Item implements Drawable {
 	}
 	
 	@Override
-	public void collide() {
-		
-	}
+	public abstract void collide();
 	
 	public void move(double dx, double dy){
 		x += dx;		

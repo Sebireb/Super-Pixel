@@ -7,6 +7,7 @@ import worlds.World;
 public abstract class Character implements Drawable{
 	
 	public final static int[][] MARIO = new int[][] {{127,0,0}};
+	public final static int[][] GUMBA = new int[][] {{127, 80, 0}};
 	
 	BoardController controller;
 	String name;
@@ -19,6 +20,7 @@ public abstract class Character implements Drawable{
 	int state;
 	int[] background;
 	protected boolean player = false;
+	World w;
 
 	public Character(double x, double y, int color[][], int size, BoardController controller, int[] background) {
 		this.x = x;
@@ -34,7 +36,7 @@ public abstract class Character implements Drawable{
 	@Override
 	public void draw() {
 		for(double y = this.y-size; y < this.y; y++){
-			controller.setColor((int) Math.round(x) + World.getXOffset(), (int)Math.round(y), color[state]);
+			controller.setColor((int) Math.round(x) + World.getXOffset(), (int)Math.round(y+0.5), color[state]);
 		}	
 	}
 
@@ -46,9 +48,7 @@ public abstract class Character implements Drawable{
 	}
 	
 	@Override
-	public void collide() {
-		
-	}
+	public abstract void collide();
 	
 	public void move(double dx, double dy){
 		x += dx;		
@@ -125,6 +125,14 @@ public abstract class Character implements Drawable{
 
 	public boolean isPlayer() {
 		return player;
+	}
+	
+	public void setWorld(World w) {
+		this.w = w;
+	}
+	
+	public World getWorld() {
+		return w;
 	}
 
 }

@@ -1,5 +1,8 @@
 package worlds;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Items.Item;
 import blocks.Block;
 import characters.Character;
@@ -11,15 +14,15 @@ public class World {
 	private static final double MAX_FALL_SPEED = 0.3;
 	
 	BoardController controller;
-	Block[] blocks;
-	Character[] characters;
-	Item[] items;
+	List<Block> blocks = new ArrayList<Block>();
+	List<Character> characters = new ArrayList<Character>();
+	List<Item> items = new ArrayList<Item>();
 	Mario mario;
 	private static boolean movement;
 	private Drawable[][] drawables;
 	private static double xOffset;
 
-	public World(Block[] blocks, Character[] characters, Item[] items, BoardController controller, int sizeX, int sizeY) {
+	public World(List<Block> blocks, List<Character> characters, List<Item> items, BoardController controller, int sizeX, int sizeY) {
 		this.controller = controller;
 		this.blocks = blocks;
 		this.characters = characters;
@@ -28,25 +31,25 @@ public class World {
 		for(Block b : blocks) {
 			drawables[(int)b.getX()][(int)b.getY()] = b;
 		}
-		for(Character c : characters) {
-			drawables[(int)c.getX()][(int)c.getY()] = c;
-		}
 		for(Item i : items) {
 			drawables[(int)i.getX()][(int)i.getY()] = i;
 		}
-		mario = (Mario) characters[0];
+		for(Character c : characters) {
+			drawables[(int)c.getX()][(int)c.getY()] = c;
+		}
+		mario = (Mario) characters.get(0);
 		allowMovement(true);
 		xOffset = 0;
 		controller.updateLedStripe();
 	}
 	
 	public void move(int dx, int dy){
-		for(int i = 0; i < blocks.length; i++){
-			blocks[i].move(dx, dy);	
+		for(Block b : blocks){
+			b.move(dx, dy);	
 		}
-		for(int i = 0; i < characters.length; i++){
-			if(!characters[i].getName().equals("Mario")){
-				characters[i].move(dx, dy);
+		for(Character c : characters){
+			if(c != mario){
+				c.move(dx, dy);
 			}
 		}
 	}
@@ -83,19 +86,52 @@ public class World {
 	public void removeDrawable(Drawable d) {
 		int x = (int) Math.round(d.getX());
 		int y = (int) Math.round(d.getY());
-		drawables[x][y] = null;		
+		drawables[x][y] = null;	
+		if (d instanceof Block) {
+			blocks.remove(d);
+		}
+		if (d instanceof Item) {
+			items.remove(d);
+		}
+		if (d instanceof Character) {
+			characters.remove(d);
+		}
+	}
+	
+	public void recalcPositions() {
+		for (int x = 0; x < drawables.length; x++) {
+			for (int y = 0; y < drawables[0].length; y++) {
+				if (drawables[x][y] != null && drawables[x][y] instanceof Character) {
+					drawables[x][y] = null;
+				}
+			}
+		}
+		for(Item i : items) {
+			drawables[(int)i.getX()][(int)i.getY()] = i;
+		}
+		for(Character c : characters) {
+			try {
+				drawables[(int)c.getX()][(int)c.getY()] = c;
+			} catch (ArrayIndexOutOfBoundsException e) {
+				drawables[(int)c.getX()][0] = c;
+			}
+		}
 	}
 
 	public Mario getMario() {
 		return mario;
 	}
 
-	public Block[] getBlocks() {
+	public List<Block> getBlocks() {
 		return blocks;
 	}
 
-	public Character[] getCharacters() {
+	public List<Character> getCharacters() {
 		return characters;
+	}
+	
+	public List<Item> getItems(){
+		return items;
 	}
 
 	public static boolean isMovementAllowed() {

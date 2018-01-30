@@ -1,16 +1,21 @@
 package ledProjects;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import Items.Coin;
 import Items.Item;
+import Items.Mushroom;
+import Threads.CalcCharacters;
 import Threads.Update;
 import Threads.xMovement;
 import Threads.yMovement;
 import blocks.Block;
-import blocks.EventBlock;
+import blocks.Brick;
 import blocks.Grass;
 import characters.Character;
+import characters.Gumba;
 import characters.Mario;
 import ledControl.BoardController;
 import ledControl.gui.KeyBuffer;
@@ -24,9 +29,10 @@ public class MyFirstBoard {
 	final static int[][] eventBlock = new int[][]{{127,127,0},{127, 40, 0}};
 	private static World w;
 	private static KeyBuffer input;
-	private static Thread t, t2, t3;
+	private static Thread t, t2, t3, t4;
 	private static yMovement yMovement;
 	private static Update update;
+	private static CalcCharacters calc;
 
 	public static void main(String[] args) {
 		
@@ -41,35 +47,44 @@ public class MyFirstBoard {
 		
 		//TESTCODE
 		
-		Block[] b = new Block[42];
+		List<Block> b = new ArrayList<Block>();
 		for(int x = 0; x < 30; x++) {
-			b[x] = new Grass(x, 11, controller, background);
+			b.add(new Grass(x, 11, controller, background));
 		}
 		for(int x = 0; x < 10; x++) {
-			b[x+30] = new EventBlock(x, 5, controller, background, "coin");
+			b.add(new Brick(x, 5, controller, background));
 		}
 		
-		b[40] = new Grass(10, 9, controller, background);
-		b[41] = new Grass(10, 10,  controller, background);
-		Character[] c = new Character[]{new Mario(6, 1, 1, controller, background)};
+		b.add(new Grass(10, 9, controller, background));
+		b.add(new Grass(10, 10,  controller, background));
 		
-		Item[] i = new Item[10];
+		List<Character> c = new ArrayList<Character>();
+		c.add(new Mario(6, 1, 1, controller, background));
+		c.add(1, new Gumba(1, 10, 1, controller, background));
+		
+		List<Item> i = new ArrayList<Item>();
 		for(int x = 0; x < 10; x++) {
-			i[x] = new Coin(x, 6, controller, background);
+			i.add(new Coin(x, 6, controller, background));
 		}
+		i.add(new Mushroom(20, 10, controller, background));
+		i.add(new Mushroom(22, 10, controller, background));
 		
 		w = new World(b, c, i, controller, 100, 12);
 		
-		for(int x = 0; x < b.length; x++) {
-			b[x].setWorld(w);
+		for(Block block : b) {
+			block.setWorld(w);
 		}
-		for(int x = 0; x < 10; x++) {
-			i[x].setWorld(w);
+		for(Character character : c) {
+			character.setWorld(w);
+		}
+		for(Item item : i) {
+			item.setWorld(w);
 		}
 		
 		//-----------
 		
 		update = new Update(controller, b, c, i, background);
+		
 		t = new Thread(update);
 		t.start();
 		
@@ -80,6 +95,11 @@ public class MyFirstBoard {
 		
 		t3 = new Thread(yMovement);
 		t3.start();
+		
+		calc = new CalcCharacters(w);
+		
+		t4 = new Thread(calc);
+		t4.start();
 		
 		while(true){
 			processInput(input.pop());

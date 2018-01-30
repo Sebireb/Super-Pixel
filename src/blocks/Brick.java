@@ -1,6 +1,7 @@
 package blocks;
 
 import ledControl.BoardController;
+import ledProjects.MyFirstBoard;
 
 public class Brick extends Block {
 
@@ -11,7 +12,9 @@ public class Brick extends Block {
 
 	@Override
 	public void collide() {
-		clear();
+		if (w.getMario().getSize() >= 2) {
+			MyFirstBoard.removeDrawable(this);
+		}
 	}
 
 }

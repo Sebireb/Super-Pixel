@@ -16,7 +16,7 @@ public class EventBlock extends Block{
 	public void collide() {
 		state = 1;
 		switch (item) {
-			case "coin" : w.getMario().pickUpCoin(1); 
+			case "coin" : w.getMario().pickUpCoin(1); break;
 		}
 		draw();
 	}
