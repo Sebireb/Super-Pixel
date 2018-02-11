@@ -18,7 +18,7 @@ public class CalcCharacters implements Runnable{
 		for (Character character : w.getCharacters()) {
 			if (character != w.getMario()) {
 				c.add (character);
-			}				
+			}		
 		}
 	}
 

@@ -30,31 +30,32 @@ public class yMovement implements Runnable {
 			
 			w.fall();
 			m.move(0, m.getSpeedY());
+
+			d = w.drawableBelowMario();
+			if(falling && d != null && d != m){
+				if (d instanceof Block) {
+					jump = false;
+				}else {
+					d.collide();
+				}
+			}
+			
+			d = w.drawableAboveMario();
+			if(!falling && d != null && d != m) {
+				if (d instanceof Block) {
+					jump = false;
+					d.collide();
+				}else
+					if (d instanceof Item) {
+						d.collide();
+					}
+			}
 			
 			if(jump){
 				timeSec += TICKSPEED;
 				double newY = calcY(timeSec);
 				if(newY == MAXHEIGHT){
 					falling = true;
-				}
-				d = w.drawableBelowMario();
-				if(falling && d != null){
-					if (d instanceof Block) {
-						jump = false;
-					}else {
-						d.collide();
-					}
-				}
-				d = w.drawableAboveMario();
-				if(!falling && d != null) {
-					if (d instanceof Block) {
-						jump = false;
-						d.collide();
-					}else
-						if (d instanceof Item) {
-							d.collide();
-						}else
-							w.getMario().damage();
 				}
 				if(newY == 0){
 					jump = false;

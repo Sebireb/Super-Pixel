@@ -9,6 +9,7 @@ public class Gumba extends Character {
 
 	public Gumba(double x, double y, int size, BoardController controller, int[] background) {
 		super(x, y, GUMBA, size, controller, background);
+		name = "Gumba";
 		speedy = 0;
 		speedx = DEFAULT_SPEED;
 	}

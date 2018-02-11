@@ -21,6 +21,12 @@ public class Mario extends Character {
 	}
 	
 	@Override
+	public void move(double dx, double dy){
+		x += dx;
+		y += dy;
+	}
+	
+	@Override
 	public void draw() {
 		for(double y = this.y-size; y < this.y; y++){
 			controller.setColor((int) Math.round(x), (int)Math.round(y), color[state]);
@@ -54,13 +60,12 @@ public class Mario extends Character {
 			clear();
 			size = 0;
 			
-			//GAMEOVER
+			System.exit(1000);
 		}
 	}
 	
 	public void pickUpCoin(int amount) {
 		coins += amount;
-		System.out.println(coins);
 	}
 
 	@Override

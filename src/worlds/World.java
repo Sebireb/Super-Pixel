@@ -52,6 +52,9 @@ public class World {
 				c.move(dx, dy);
 			}
 		}
+		for (Item i : items){
+			i.move(dx, dy);
+		}
 	}
 
 	public Drawable getCollideable(int x, int y) {
@@ -73,7 +76,7 @@ public class World {
 	}
 	
 	public void fall() {
-		if(drawableBelowMario() == null) {
+		if(drawableBelowMario() == null || drawableBelowMario() == mario) {
 			if(mario.getSpeedY() > MAX_FALL_SPEED){
 				return;
 			}
@@ -101,7 +104,7 @@ public class World {
 	public void recalcPositions() {
 		for (int x = 0; x < drawables.length; x++) {
 			for (int y = 0; y < drawables[0].length; y++) {
-				if (drawables[x][y] != null && drawables[x][y] instanceof Character) {
+				if (drawables[x][y] != null && ( drawables[x][y] instanceof Character || drawables[x][y] instanceof Item)) {
 					drawables[x][y] = null;
 				}
 			}
@@ -115,6 +118,9 @@ public class World {
 			} catch (ArrayIndexOutOfBoundsException e) {
 				drawables[(int)c.getX()][0] = c;
 			}
+		}
+		for(Block b : blocks) {
+			drawables[(int)b.getX()][(int)b.getY()] = b;
 		}
 	}
 
@@ -144,6 +150,10 @@ public class World {
 	
 	public void addXOffset(double xOffset) {
 		World.xOffset += xOffset;
+	}
+	
+	public void setXOffset(double xOffset){
+		World.xOffset = xOffset;
 	}
 	
 	public Drawable[][] getDrawables(){

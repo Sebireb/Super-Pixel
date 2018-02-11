@@ -51,8 +51,10 @@ public abstract class Character implements Drawable{
 	public abstract void collide();
 	
 	public void move(double dx, double dy){
-		x += dx;		
-		y += dy;
+		//if (w.getCollideable((int)Math.round(x + dx), (int)Math.round(y)) == null)
+			x += dx;	
+		//if (w.getCollideable((int)Math.round(x), (int)Math.round(y + dy)) == null)	
+			y += dy;
 	}
 	
 	public void addSpeedX(double speed){

@@ -59,7 +59,7 @@ public class MyFirstBoard {
 		b.add(new Grass(10, 10,  controller, background));
 		
 		List<Character> c = new ArrayList<Character>();
-		c.add(new Mario(6, 1, 1, controller, background));
+		c.add(new Mario(6, 0, 1, controller, background));
 		c.add(1, new Gumba(1, 10, 1, controller, background));
 		
 		List<Item> i = new ArrayList<Item>();
@@ -133,6 +133,9 @@ public class MyFirstBoard {
 	public static void removeDrawable(Drawable d) {
 		w.removeDrawable(d);
 		update.removeDrawable(d);
+		if (d instanceof Character){
+			calc.removeCharacter((Character)d);	
+		}
 		d.clear();
 	}
 	
