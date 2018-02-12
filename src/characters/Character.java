@@ -1,5 +1,6 @@
 package characters;
 
+import blocks.Block;
 import ledControl.BoardController;
 import ledProjects.Drawable;
 import worlds.World;
@@ -51,10 +52,18 @@ public abstract class Character implements Drawable{
 	public abstract void collide();
 	
 	public void move(double dx, double dy){
-		//if (w.getCollideable((int)Math.round(x + dx), (int)Math.round(y)) == null)
+		Drawable d = w.getCollideable((int)Math.round(x + dx + World.getXOffset()), (int)Math.round(y));
+		
+		if (d instanceof Block){
+			speedx = -speedx;
+		}else {
 			x += dx;	
-		//if (w.getCollideable((int)Math.round(x), (int)Math.round(y + dy)) == null)	
 			y += dy;
+			if (d instanceof Mario){
+				d.collide();
+			}
+		}
+			
 	}
 	
 	public void addSpeedX(double speed){
