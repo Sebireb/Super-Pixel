@@ -33,6 +33,8 @@ public class MyFirstBoard {
 	private static yMovement yMovement;
 	private static Update update;
 	private static CalcCharacters calc;
+	
+	//final static int[][] gameover = new int[][] {};
 
 	public static void main(String[] args) {
 		

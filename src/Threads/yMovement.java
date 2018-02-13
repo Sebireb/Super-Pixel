@@ -32,7 +32,7 @@ public class yMovement implements Runnable {
 			m.move(0, m.getSpeedY());
 
 			d = w.drawableBelowMario();
-			if(falling && d != null && d != m){
+			if(falling &&  d != null && d != m){
 				if (d instanceof Block) {
 					jump = false;
 				}else {

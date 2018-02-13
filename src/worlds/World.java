@@ -2,6 +2,8 @@ package worlds;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import Items.Item;
 import blocks.Block;
@@ -21,6 +23,10 @@ public class World {
 	private static boolean movement;
 	private Drawable[][] drawables;
 	private static double xOffset;
+	
+	private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
+	private final Lock writeLock = lock.writeLock(),
+						readLock = lock.readLock();
 
 	public World(List<Block> blocks, List<Character> characters, List<Item> items, BoardController controller, int sizeX, int sizeY) {
 		this.controller = controller;
@@ -58,10 +64,13 @@ public class World {
 	}
 
 	public Drawable getCollideable(int x, int y) {
+		readLock.lock();
 		try {
 			return drawables[x - (int) Math.round(xOffset)][y];
 		} catch (IndexOutOfBoundsException e) { // Outside the map
 			return null;
+		}finally {
+			readLock.unlock();	
 		}
 	}
 	
@@ -87,6 +96,7 @@ public class World {
 	}
 	
 	public void removeDrawable(Drawable d) {
+		writeLock.lock();
 		int x = (int) Math.round(d.getX());
 		int y = (int) Math.round(d.getY());
 		drawables[x][y] = null;	
@@ -99,9 +109,11 @@ public class World {
 		if (d instanceof Character) {
 			characters.remove(d);
 		}
+		writeLock.unlock();
 	}
 	
 	public void recalcPositions() {
+		writeLock.lock();
 		for (int x = 0; x < drawables.length; x++) {
 			for (int y = 0; y < drawables[0].length; y++) {
 				if (drawables[x][y] != null && ( drawables[x][y] instanceof Character || drawables[x][y] instanceof Item)) {
@@ -122,6 +134,7 @@ public class World {
 		for(Block b : blocks) {
 			drawables[(int)b.getX()][(int)b.getY()] = b;
 		}
+		writeLock.unlock();
 	}
 
 	public Mario getMario() {
