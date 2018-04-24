@@ -1,14 +1,18 @@
 package characters;
 
 import ledControl.BoardController;
+import ledProjects.Drawable;
+import ledProjects.DrawableType;
 
 public class Mario extends Character {
 	
 	final static long COLLISIONDELAY = 1000;
 	
-	int lives;
-	int coins;
-	long lastCollision = System.currentTimeMillis();
+	private final double MAXFALLSPEED = 1;
+	
+	private int lives;
+	private int coins;
+	private long lastCollision = System.currentTimeMillis();
 
 	public Mario(int x, int y, int size, BoardController controller, int[] background) {
 		super(x, y, Character.MARIO, size, controller, background);
@@ -38,6 +42,25 @@ public class Mario extends Character {
 		for(double y = this.y-size; y < this.y; y++){
 			controller.setColor((int) Math.round(x), (int)Math.round(y), background);
 		}
+	}
+	
+	public void move() {
+		Drawable d = w.getCollideable((int)Math.round(x + speedx), (int)Math.round(y));
+		if (d != null && d.getDrawableType() == DrawableType.BLOCK) {
+			
+		}else
+			w.addXOffset(-speedx);
+	}
+	
+	public void stopFall() {
+		speedy = 0;
+	}
+	
+	public void fall() {
+		if (speedy <= MAXFALLSPEED) {
+			speedy += 0.2;
+		}
+		y += speedy;
 	}
 	
 	public void grow() {

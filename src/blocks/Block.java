@@ -2,6 +2,7 @@ package blocks;
 
 import ledControl.BoardController;
 import ledProjects.Drawable;
+import ledProjects.DrawableType;
 import worlds.World;
 
 public abstract class Block implements Drawable {
@@ -9,6 +10,8 @@ public abstract class Block implements Drawable {
 	public final static int[][] EVENTBLOCK = new int[][]{{127, 127, 0},{127, 80, 30}};
 	public final static int[][] BRICK = new int[][] {{127, 70, 20}};
 	public final static int[][] GRASS = new int[][] {{0, 127, 0}};
+	
+	public final static Enum drawableType = DrawableType.BLOCK;
 	
 	BoardController controller;
 	String name;
@@ -27,6 +30,11 @@ public abstract class Block implements Drawable {
 		this.background = background;
 		state = 0;
 		draw();
+	}
+	
+	@Override
+	public Enum getDrawableType() {
+		return drawableType;
 	}
 
 	@Override

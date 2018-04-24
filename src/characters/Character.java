@@ -3,12 +3,15 @@ package characters;
 import blocks.Block;
 import ledControl.BoardController;
 import ledProjects.Drawable;
+import ledProjects.DrawableType;
 import worlds.World;
 
 public abstract class Character implements Drawable{
 	
 	public final static int[][] MARIO = new int[][] {{127,0,0}};
 	public final static int[][] GUMBA = new int[][] {{127, 80, 0}};
+	
+	public final static Enum drawableType = DrawableType.CHARACTER;
 	
 	BoardController controller;
 	String name;
@@ -32,6 +35,11 @@ public abstract class Character implements Drawable{
 		this.background = background;
 		state = 0;
 		draw();
+	}
+	
+	@Override
+	public Enum getDrawableType() {
+		return drawableType;
 	}
 
 	@Override

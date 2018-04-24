@@ -29,10 +29,11 @@ public class MyFirstBoard {
 	final static int[][] eventBlock = new int[][]{{127,127,0},{127, 40, 0}};
 	private static World w;
 	private static KeyBuffer input;
-	private static Thread t, t2, t3, t4;
+//	private static Thread t, t2, t3, t4;
 	private static yMovement yMovement;
 	private static Update update;
 	private static CalcCharacters calc;
+	private static boolean left, right, up;
 	
 	//final static int[][] gameover = new int[][] {};
 
@@ -61,7 +62,8 @@ public class MyFirstBoard {
 		b.add(new Grass(10, 10,  controller, background));
 		
 		List<Character> c = new ArrayList<Character>();
-		c.add(new Mario(6, 0, 1, controller, background));
+		c.add(new Mario(6, 1, 1, controller, background));
+		//TODO Ueberpruefen warum bei 0 nicht gezeichnet
 		c.add(1, new Gumba(1, 10, 1, controller, background));
 		
 		List<Item> i = new ArrayList<Item>();
@@ -85,32 +87,53 @@ public class MyFirstBoard {
 		
 		//-----------
 		
-		update = new Update(controller, b, c, i, background);
+//		update = new Update(controller, b, c, i, background);
+//		
+//		t = new Thread(update);
+//		t.start();
+//		
+//		t2 = new Thread(new xMovement(w, w.getMario()));
+//		t2.start();
+//		
+//		yMovement = new yMovement(w);
+//		
+//		t3 = new Thread(yMovement);
+//		t3.start();
+//		
+//		calc = new CalcCharacters(w);
+//		
+//		t4 = new Thread(calc);
+//		t4.start();
+//		
+//		while(true){
+//			processInput(input.pop());
+//			input.clear();
+//			try {
+//				Thread.sleep(10);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		
-		t = new Thread(update);
-		t.start();
+		gameLoop();
 		
-		t2 = new Thread(new xMovement(w, w.getMario()));
-		t2.start();
+	}
+	
+	private static void gameLoop() {
 		
-		yMovement = new yMovement(w);
+		while (true) {
+			controller.resetColors();
+			checkInput();
+			w.update(up, left,right);
+			controller.updateLedStripe();
+		}
 		
-		t3 = new Thread(yMovement);
-		t3.start();
-		
-		calc = new CalcCharacters(w);
-		
-		t4 = new Thread(calc);
-		t4.start();
-		
-		while(true){
-			processInput(input.pop());
-			input.clear();
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+	}
+	
+	private static void checkInput() {
+		KeyEvent[] inputs = input.popAll();
+		for (KeyEvent e : inputs) {
+			processInput(e);
 		}
 	}
 	
@@ -147,18 +170,24 @@ public class MyFirstBoard {
 		}
 		if(e.getID() == KeyEvent.KEY_PRESSED){
 			if(e.getKeyCode() == KeyEvent.VK_A){
-				goLeft();
+				left = true;
 			}
 			if(e.getKeyCode() == KeyEvent.VK_D){
-				goRight();
+				right = true;
 			}
 			if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-				jump();
+				up = true;
 			}
 		}
 		if(e.getID() == KeyEvent.KEY_RELEASED){
-			if(e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_D){
-				stopXMovement();
+			if(e.getKeyCode() == KeyEvent.VK_A){
+				left = false;
+			}
+			if(e.getKeyCode() == KeyEvent.VK_D){
+				right = false;
+			}
+			if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+				up = false;
 			}
 		}
 	}

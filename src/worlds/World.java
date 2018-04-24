@@ -11,6 +11,7 @@ import characters.Character;
 import characters.Mario;
 import ledControl.BoardController;
 import ledProjects.Drawable;
+import ledProjects.DrawableType;
 
 public class World {
 	private static final double MAX_FALL_SPEED = 0.3;
@@ -47,6 +48,42 @@ public class World {
 		allowMovement(true);
 		xOffset = 0;
 		controller.updateLedStripe();
+	}
+	
+	public void update(boolean up, boolean left, boolean right) {
+		for (Block b : blocks) {
+			b.draw();
+		}
+		for (Item i : items) {
+			i.draw();
+		}
+		for (Character c : characters) {
+			if (!c.getName().equals("Mario"))
+				c.draw();
+		}
+		updateMario(up, left, right);
+		mario.draw();
+	}
+	
+	private void updateMario(boolean up, boolean left, boolean right) {
+		if (drawableBelowMario() != null && drawableBelowMario().getDrawableType() == DrawableType.BLOCK) {
+			//TODO diagonales fallen
+			mario.stopFall();
+			if (up) {
+				
+			}
+		}else
+			mario.fall();
+		if (left) {
+			mario.setSpeedX(-0.5);
+		}
+		if (right) {
+			mario.setSpeedX(0.5);
+		}
+		if (!right && !left) {
+			mario.setSpeedX(0);
+		}
+		mario.move();
 	}
 	
 	public void move(int dx, int dy){

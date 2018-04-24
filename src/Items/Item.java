@@ -2,12 +2,15 @@ package Items;
 
 import ledControl.BoardController;
 import ledProjects.Drawable;
+import ledProjects.DrawableType;
 import worlds.World;
 
 public abstract class Item implements Drawable {
 	
 	public final static int[] COIN = new int[]{90, 90, 0};
 	public final static int[] MUSHROOM = new int[]{90, 0, 0};
+	
+	public final static Enum drawableType = DrawableType.ITEM;
 
 	BoardController controller;
 	String type;
@@ -22,6 +25,11 @@ public abstract class Item implements Drawable {
 		this.color = color;
 		this.controller = controller;
 		this.background = background;
+	}
+	
+	@Override
+	public Enum getDrawableType() {
+		return drawableType;
 	}
 	
 	@Override
